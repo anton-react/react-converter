@@ -5,6 +5,7 @@ import { SwapOutlined } from '@ant-design/icons';
 
 import { getCurrencies, convertCurrency } from 'src/store/actions/currencies';
 import SelectCurrency from 'src/components/SelectCurrency';
+import HistoryTable from 'src/components/HistoryTable';
 import styles from './styles.module.less';
 
 const { Header, Content } = Layout;
@@ -52,8 +53,6 @@ function Dashboard() {
   };
 
   const onConvert = (event) => {
-    console.log(`selected ${event}`);
-    debugger;
     dispatch(
       convertCurrency({
         from: currencyFrom,
@@ -63,38 +62,6 @@ function Dashboard() {
     );
   };
 
-  const columns = [
-    {
-      title: 'Date',
-      dataIndex: 'date',
-      key: 'date',
-    },
-    {
-      title: 'Rate',
-      dataIndex: 'rate',
-      key: 'rate',
-    },
-    {
-      title: 'Currency From',
-      dataIndex: 'currencyFrom',
-      key: 'currencyFrom',
-    },
-    {
-      title: 'Currency To',
-      dataIndex: 'currencyTo',
-      key: 'currencyTo',
-    },
-    {
-      title: 'Amount',
-      dataIndex: 'amount',
-      key: 'amount',
-    },
-    {
-      title: 'Amount Converted',
-      dataIndex: 'amountConverted',
-      key: 'amountConverted',
-    },
-  ];
   return (
     <>
       <Layout>
@@ -149,7 +116,7 @@ function Dashboard() {
 
             <Row>
               <Col span={12} offset={6}>
-                <Table dataSource={history} columns={columns} />
+                <HistoryTable dataSource={history} />
               </Col>
             </Row>
           </Content>
