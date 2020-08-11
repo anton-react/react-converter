@@ -45,10 +45,13 @@ export default {
           ...state,
           history: [
             {
+              key: new Date().getTime(),
               date: payload.date,
               rate: payload.info.rate,
-              query: payload.query,
-              result: payload.result,
+              currencyFrom: payload.query.from,
+              currencyTo: payload.query.to,
+              amount: payload.query.amount,
+              amountConverted: payload.result,
             },
             ...state.history,
           ],

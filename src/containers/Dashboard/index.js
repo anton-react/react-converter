@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { withRouter } from 'react-router-dom';
-import { Row, Col, Layout, Input, Button } from 'antd';
+import { Row, Col, Layout, Input, Button, Table } from 'antd';
 import { SwapOutlined } from '@ant-design/icons';
 
 import { getCurrencies, convertCurrency } from 'src/store/actions/currencies';
@@ -64,6 +63,38 @@ function Dashboard() {
     );
   };
 
+  const columns = [
+    {
+      title: 'Date',
+      dataIndex: 'date',
+      key: 'date',
+    },
+    {
+      title: 'Rate',
+      dataIndex: 'rate',
+      key: 'rate',
+    },
+    {
+      title: 'Currency From',
+      dataIndex: 'currencyFrom',
+      key: 'currencyFrom',
+    },
+    {
+      title: 'Currency To',
+      dataIndex: 'currencyTo',
+      key: 'currencyTo',
+    },
+    {
+      title: 'Amount',
+      dataIndex: 'amount',
+      key: 'amount',
+    },
+    {
+      title: 'Amount Converted',
+      dataIndex: 'amountConverted',
+      key: 'amountConverted',
+    },
+  ];
   return (
     <>
       <Layout>
@@ -73,7 +104,7 @@ function Dashboard() {
             <Row>
               <Col span={12} offset={6}>
                 <Row>
-                  <Col span={10}>
+                  <Col span={11}>
                     <SelectCurrency
                       value={currencyFrom}
                       onChange={onSelectCurrencyFrom}
@@ -92,7 +123,7 @@ function Dashboard() {
                       <SwapOutlined />
                     </span>
                   </Col>
-                  <Col span={10}>
+                  <Col span={11}>
                     <SelectCurrency
                       currencies={currencies}
                       value={currencyTo}
@@ -113,6 +144,12 @@ function Dashboard() {
                     </Button>
                   </Col>
                 </Row>
+              </Col>
+            </Row>
+
+            <Row>
+              <Col span={12} offset={6}>
+                <Table dataSource={history} columns={columns} />
               </Col>
             </Row>
           </Content>
