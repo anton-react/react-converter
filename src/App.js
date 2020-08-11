@@ -4,7 +4,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import createStore from 'src/store';
-import Dashboard from 'src/containers/Dashboard/Dashboard';
+import Dashboard from 'src/containers/Dashboard';
 
 const { store, persistor } = createStore();
 
