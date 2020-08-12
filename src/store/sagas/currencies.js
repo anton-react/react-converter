@@ -19,8 +19,6 @@ export function* loadCurrenciesSaga({ payload }) {
 }
 
 export function* convertCurrencySaga({ payload: { from, to, amount } }) {
-  console.log('payload', { from, to, amount });
-
   const response = yield fetch(
     `${process.env.REACT_APP_API_URL}/convert?from=${from}&to=${to}&amount=${amount}`,
     {

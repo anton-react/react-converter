@@ -22,15 +22,16 @@ export default {
         return {
           ...state,
           loading: false,
-          currencies: Object.entries(payload).reduce((acc, [key, value]) => {
-            return [
+          currencies: Object.entries(payload).reduce(
+            (acc, [key, value]) => [
               ...acc,
               {
                 key,
                 value,
               },
-            ];
-          }, []),
+            ],
+            []
+          ),
         };
       },
       [ActionTypes.CONVERT_CURRENCY]: (state) => {
@@ -40,7 +41,6 @@ export default {
         };
       },
       [ActionTypes.CONVERT_CURRENCY_SUCCESS]: (state, { payload }) => {
-        console.log(payload);
         return {
           ...state,
           history: [

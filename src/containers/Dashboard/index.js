@@ -30,7 +30,7 @@ function Dashboard() {
       const lastResult = history[0].result;
       setAmountConverted(converting ? 0 : lastResult);
     }
-  }, [converting]);
+  }, [converting, history]);
 
   useEffect(() => {
     didMount.current = true;
