@@ -1,4 +1,4 @@
-import { all, put, call, takeLatest } from 'redux-saga/effects';
+import { all, put, takeLatest } from 'redux-saga/effects';
 
 import { ActionTypes } from 'src/store/constants';
 import {

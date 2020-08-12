@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Row, Col, Layout, Input, Button, Table } from 'antd';
+import { Row, Col, Layout, Input, Button } from 'antd';
 import { SwapOutlined } from '@ant-design/icons';
 
 import { getCurrencies, convertCurrency } from 'src/store/actions/currencies';
@@ -8,7 +8,7 @@ import SelectCurrency from 'src/components/SelectCurrency';
 import HistoryTable from 'src/components/HistoryTable';
 import styles from './styles.module.less';
 
-const { Header, Content } = Layout;
+const { Content } = Layout;
 
 function Dashboard() {
   const dispatch = useDispatch();
@@ -18,10 +18,10 @@ function Dashboard() {
   const history = useSelector((state) => state.currencies.history);
   const didMount = useRef(false);
 
-  const [amount, setAmount] = useState(null);
+  const [amount, setAmount] = useState(0);
   const [amountConverted, setAmountConverted] = useState(0);
-  const [currencyFrom, setCurrencyFrom] = useState();
-  const [currencyTo, setCurrencyTo] = useState();
+  const [currencyFrom, setCurrencyFrom] = useState(currencies[0]?.key);
+  const [currencyTo, setCurrencyTo] = useState(currencies[1]?.key);
 
   const disabled = amount <= 0;
 
@@ -60,6 +60,13 @@ function Dashboard() {
     );
   };
 
+  const onSwapCurrencies = () => {
+    setCurrencyFrom(currencyTo);
+    setCurrencyTo(currencyFrom);
+    setAmount(amountConverted);
+    setAmountConverted(amount);
+  };
+
   return (
     <>
       <Layout className={styles.wrap}>
@@ -72,7 +79,7 @@ function Dashboard() {
                   <Row>
                     <Col span={11}>
                       <SelectCurrency
-                        defaultValue={currencies[0]?.key}
+                        placeholder="Select currency from"
                         value={currencyFrom}
                         onChange={onSelectCurrencyFrom}
                         currencies={currencies}
@@ -86,16 +93,18 @@ function Dashboard() {
                       />
                     </Col>
                     <Col span={2} className={styles.switchCurrenciesWrap}>
-                      <span className={styles.switchCurrencies}>
+                      <span
+                        className={styles.switchCurrencies}
+                        onClick={onSwapCurrencies}
+                      >
                         <SwapOutlined />
                       </span>
                     </Col>
                     <Col span={11}>
                       <SelectCurrency
-                        defaultValue={currencies[1]?.key}
+                        placeholder="Select currency to"
                         currencies={currencies}
                         value={currencyTo}
-                        type="number"
                         onChange={onSelectCurrencyTo}
                       />
                       <Input disabled value={amountConverted} type="number" />
