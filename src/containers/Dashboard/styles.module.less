@@ -1,3 +1,6 @@
+.wrap {
+  padding: 15px;
+}
 .switchCurrenciesWrap {
   display: flex;
   align-items: center;
@@ -5,10 +8,24 @@
 }
 .switchCurrencies {
   cursor: pointer;
+  svg {
+    transition: all 0.3s;
+  }
+  &:hover {
+    svg {
+      fill: #1890ff;
+    }
+  }
 }
 
 .converterButtonWrap {
-  padding: 10px 0;
+  padding: 15px 0;
   display: flex;
+  justify-content: center;
+}
+
+.loading {
+  display: flex;
+  align-items: center;
   justify-content: center;
 }

@@ -20,12 +20,10 @@ function Dashboard() {
 
   const [amount, setAmount] = useState(null);
   const [amountConverted, setAmountConverted] = useState(0);
-  const [currencyFrom, setCurrencyFrom] = useState(currencies[0]?.key);
-  const [currencyTo, setCurrencyTo] = useState(currencies[1]?.key);
+  const [currencyFrom, setCurrencyFrom] = useState();
+  const [currencyTo, setCurrencyTo] = useState();
 
   const disabled = amount <= 0;
-
-  console.log('loading', loading);
 
   useEffect(() => {
     if (didMount.current && history.length) {
@@ -64,63 +62,65 @@ function Dashboard() {
 
   return (
     <>
-      <Layout>
-        <Header>Currency Converter</Header>
-        <Layout>
-          <Content>
-            <Row>
-              <Col span={12} offset={6}>
-                <Row>
-                  <Col span={11}>
-                    <SelectCurrency
-                      value={currencyFrom}
-                      onChange={onSelectCurrencyFrom}
-                      currencies={currencies}
-                    />
-                    <Input
-                      placeholder="Set amount"
-                      value={amount}
-                      onChange={onChangeAmount}
-                      type="number"
-                      allowClear
-                    />
-                  </Col>
-                  <Col span={2} className={styles.switchCurrenciesWrap}>
-                    <span className={styles.switchCurrencies}>
-                      <SwapOutlined />
-                    </span>
-                  </Col>
-                  <Col span={11}>
-                    <SelectCurrency
-                      currencies={currencies}
-                      value={currencyTo}
-                      type="number"
-                      onChange={onSelectCurrencyTo}
-                    />
-                    <Input disabled value={amountConverted} type="number" />
-                  </Col>
-                </Row>
-                <Row>
-                  <Col span={24} className={styles.converterButtonWrap}>
-                    <Button
-                      loading={converting}
-                      disabled={disabled}
-                      onClick={onConvert}
-                    >
-                      Convert
-                    </Button>
-                  </Col>
-                </Row>
-              </Col>
-            </Row>
-
-            <Row>
-              <Col span={12} offset={6}>
-                <HistoryTable dataSource={history} />
-              </Col>
-            </Row>
-          </Content>
-        </Layout>
+      <Layout className={styles.wrap}>
+        <Content>
+          <Row gutter={[15, 15]}>
+            <Col span={24} xl={12}>
+              {loading && <div className={styles.loading}>loading...</div>}
+              {!loading && (
+                <>
+                  <Row>
+                    <Col span={11}>
+                      <SelectCurrency
+                        defaultValue={currencies[0]?.key}
+                        value={currencyFrom}
+                        onChange={onSelectCurrencyFrom}
+                        currencies={currencies}
+                      />
+                      <Input
+                        placeholder="Set amount"
+                        value={amount}
+                        onChange={onChangeAmount}
+                        type="number"
+                        allowClear
+                      />
+                    </Col>
+                    <Col span={2} className={styles.switchCurrenciesWrap}>
+                      <span className={styles.switchCurrencies}>
+                        <SwapOutlined />
+                      </span>
+                    </Col>
+                    <Col span={11}>
+                      <SelectCurrency
+                        defaultValue={currencies[1]?.key}
+                        currencies={currencies}
+                        value={currencyTo}
+                        type="number"
+                        onChange={onSelectCurrencyTo}
+                      />
+                      <Input disabled value={amountConverted} type="number" />
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col span={24} className={styles.converterButtonWrap}>
+                      <Button
+                        type="primary"
+                        loading={converting}
+                        disabled={disabled}
+                        onClick={onConvert}
+                      >
+                        Convert
+                      </Button>
+                    </Col>
+                  </Row>
+                </>
+              )}
+            </Col>
+            <Col span={24} xl={12}>
+              <HistoryTable dataSource={history} />
+            </Col>
+          </Row>
+        </Content>
       </Layout>
     </>
   );

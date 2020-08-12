@@ -35,7 +35,7 @@ const columns = [
 ];
 
 function HistoryTable({ dataSource }) {
-  return <Table dataSource={dataSource} columns={columns} />;
+  return <Table dataSource={dataSource} columns={columns} pagination={false} />;
 }
 
 HistoryTable.propTypes = {
